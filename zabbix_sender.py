@@ -1,4 +1,4 @@
-#0.0.0.0/0!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
 import re
@@ -87,9 +87,22 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--port', action='store', dest='p', help='zabbix server port', default=10051)
     parser.add_argument('-s', '--host', action='store', dest='s', help='managed hostname or address', required=True)
     parser.add_argument('-k', '--key', action='store', dest='k', help='item key', required=True)
-    parser.add_argument('-o', '--value', action='store', dest='o', help='item value', required=True)
+    parser.add_argument('-o', '--value', action='store', dest='o', help='item value')
+    parser.add_argument('-f', '--file', action='store', dest='f', help='item value')
     args = parser.parse_args()
 
-    sender = ZabbixSender(args.z, port=args.p)
-    sender.set_packet(host=args.s, key=args.k, val=args.o)
-    res = sender.send()
+    val = None
+    if args.o is not None:
+        val = args.o
+    elif args.f is not None:
+        with open(args.f, 'r', encoding='utf-8') as f:
+            val = f.read()
+    else:
+        raise Exception('-o 又は -f でアイテム値を指定して下さい')
+
+    print(val)
+    print(f'sending zabbix trapper data to {args.z}:{args.p}...')
+    print(f'host: {args.s}, key: {args.k}, val: {val}')
+    #sender.set_packet(host=args.s, key=args.k, val=val)
+    #sender = ZabbixSender(args.z, port=args.p)
+    #res = sender.send()

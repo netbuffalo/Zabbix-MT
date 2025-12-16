@@ -152,12 +152,13 @@ def main():
                 sender.set_packet(
                         host=args.host,
                         key='MAIL',
-                        val=json.dumps(data, ensure_ascii=False)
+                        val=json.dumps(data, indent=2, ensure_ascii=False)
                         )
 
                 res = sender.send()
             finally:
-                pop3.dele(i)
+                pass
+                #pop3.dele(i)
         # <= mail message loop
     except Exception as e:
         log.error("Oops! Exception caught:", exc_info=True)

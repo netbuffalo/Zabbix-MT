@@ -1,5 +1,7 @@
 #!/bin/bash
 
+app="Zabbix-MT"
+
 # application home
 src="${BASH_SOURCE[0]}"
 
@@ -11,6 +13,12 @@ fi
 
 home=$(cd $(dirname $path) && pwd)
 
-ln -s $home/Zabbix-MT.sh $home/../Zabbix-MT.sh
+exscript="$home/../$app.sh"
 
-chown -R zabbix:zabbix $home/../Zabbix-MT*
+if [ -f "$exscript" ] || [ -L "$exscript" ]; then
+    rm -f "$exscript"
+fi
+
+ln -s $home/$app.sh $exscript
+
+chown -R zabbix:zabbix $home/../$app*
