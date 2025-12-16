@@ -11,6 +11,6 @@ fi
 
 home=$(cd $(dirname $path) && pwd)
 
-ln -s $home/zabbix-MT.sh $home/../zabbix-MT.sh
+ln -s $home/Zabbix-MT.sh $home/../Zabbix-MT.sh
 
-chown -R zabbix:zabbix $home/../zabbix-MT*
+chown -R zabbix:zabbix $home/../Zabbix-MT*

@@ -17,6 +17,16 @@ zabbix_export:
           delay: '0'
           value_type: TEXT
           trends: '0'
+      discovery_rules:
+        - uuid: d7eab9b5f379469aa6764de3633ba6da
+          name: メール受信
+          type: EXTERNAL
+          key: 'Zabbix-MT.sh[--host,{HOST.HOST}]'
+          delay: '60'
+          description: |
+            ホストに登録されているPOP3サーバーのマクロを読み取ってメールを受信します。
+            受信したメールをホストのアイテム（MAILキー）に保存します。
+          timeout: 5s
       macros:
         - macro: '{$POP3_HOSTNAME}'
           value: localhost
