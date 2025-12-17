@@ -157,8 +157,7 @@ def main():
 
                 res = sender.send()
             finally:
-                pass
-                #pop3.dele(i)
+                pop3.dele(i)
         # <= mail message loop
     except Exception as e:
         log.error("Oops! Exception caught:", exc_info=True)
