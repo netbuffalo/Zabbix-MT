@@ -100,9 +100,12 @@ if __name__ == '__main__':
     else:
         raise Exception('-o 又は -f でアイテム値を指定して下さい')
 
-    print(val)
+    sender = ZabbixSender(args.z, port=args.p)
+    sender.set_packet(host=args.s, key=args.k, val=val)
+
     print(f'sending zabbix trapper data to {args.z}:{args.p}...')
     print(f'host: {args.s}, key: {args.k}, val: {val}')
-    #sender.set_packet(host=args.s, key=args.k, val=val)
-    #sender = ZabbixSender(args.z, port=args.p)
-    #res = sender.send()
+
+    res = sender.send()
+
+    print(res)

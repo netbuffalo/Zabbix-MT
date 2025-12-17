@@ -58,10 +58,10 @@ def main():
     log.addHandler(stdout)
 
     pop3 = None
-    pop3_hostname = 'localhost'
+    pop3_hostname = None
     pop3_port     = 995
-    pop3_username = 'username'
-    pop3_password = 'password'
+    pop3_username = None
+    pop3_password = None
 
     try:
         print(json.dumps({'data': []}))
@@ -97,19 +97,20 @@ def main():
         host = SimpleNamespace(**data)
 
         for m in host.macros:
-            if m['macro'] == '{$POP3_HOSTNAME}':
+            if m['macro'] == '{$POP3_HOSTNAME}' and len(m['value']) > 0:
                 pop3_hostname = m['value']
-            elif m['macro'] == '{$POP3_PORT}':
+            elif m['macro'] == '{$POP3_PORT}' and len(m['value']) > 0:
                 pop3_port = int(m['value'])
-            elif m['macro'] == '{$POP3_USERNAME}':
+            elif m['macro'] == '{$POP3_USERNAME}' and len(m['value']) > 0:
                 pop3_username = m['value']
-            elif m['macro'] == '{$POP3_PASSWORD}':
+            elif m['macro'] == '{$POP3_PASSWORD}' and len(m['value']) > 0:
                 pop3_password = m['value']
 
         #log.info(pop3_hostname, pop3_username, pop3_password)
 
-        if pop3_hostname is None and pop3_hostname == 'localhost':
-            raise Exception('POP3 macro is not found on this host.')
+        if pop3_hostname is None or pop3_username is None or pop3_password is None:
+            log.error(f'No valid POP3 macro was found on this host {args.host}.')
+            return
 
         # zabbix sender
         sender = ZabbixSender(zabbix_host)

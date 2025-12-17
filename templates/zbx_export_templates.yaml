@@ -29,14 +29,11 @@ zabbix_export:
           timeout: 5s
       macros:
         - macro: '{$POP3_HOSTNAME}'
-          value: localhost
           description: POP3サーバー
         - macro: '{$POP3_PASSWORD}'
-          value: password
           description: POP3認証パスワード
         - macro: '{$POP3_PORT}'
           value: '995'
           description: POP3（S）ポート番号
         - macro: '{$POP3_USERNAME}'
-          value: username
           description: POP3認証ユーザー名
